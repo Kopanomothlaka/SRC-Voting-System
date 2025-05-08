@@ -36,3 +36,6 @@ Route::get('/dashboard', function () {
 Route::get('/HowToVote', function () {
     return view('pages.HowToVote');
 })->name('HowToVote');
+Route::get('/profile', function () {
+    return view('pages.profile');
+})->name('profile');

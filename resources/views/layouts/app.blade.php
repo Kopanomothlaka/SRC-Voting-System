@@ -36,14 +36,23 @@
                         <a href="{{route('HowToVote')}}"><i class="fas fa-question-circle"></i> How to Vote</a>
                         <a href="#candidates"><i class="fas fa-users"></i> Candidates</a>
                     <a href="#vote"><i class="fas fa-vote-yea"></i> Vote</a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="logout-btn">
-                            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
-                        </button>
-                    </form>
-                    <a href="#login" class="login-btn">
-                        <i class="fas fa-person"></i> <span>Profile</span>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <div class="sidebar-menu-item">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span>Log Out</span>
+                            </div>
+                        </a>
+
+
+
+
+                    <a href="{{route('profile')}}" class="login-btn">
+                        <i class="fa-solid fa-user"></i><span>Profile</span>
                     </a>
 
 
