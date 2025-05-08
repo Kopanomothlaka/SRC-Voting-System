@@ -7,7 +7,7 @@
             <div class="hero-content">
                 <h1 class="hero-title">Welcome Back To Voting Station</h1>
                 <p class="hero-text">Your voice matters! The University of South Africa SRC Election 2025 is your opportunity to shape the future of student leadership. Cast your vote and help elect representatives who will advocate for your needs, enhance student life, and drive positive change on campus.</p>
-                <a href="#vote" class="cta-btn">
+                <a href="{{route('login')}}" class="cta-btn">
                     Cast Your Vote <i class="fas fa-arrow-right"></i>
                 </a>
             </div>

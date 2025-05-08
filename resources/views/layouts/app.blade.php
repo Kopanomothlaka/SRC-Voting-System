@@ -18,17 +18,33 @@
         <nav>
             <div class="nav-links" id="navLinks">
                 <a href="#home"><i class="fas fa-home"></i> Home</a>
-                <a href="#vote"><i class="fas fa-vote-yea"></i> Vote</a>
+
                 <a href="#how-to-vote"><i class="fas fa-question-circle"></i> How to Vote</a>
                 <a href="#candidates"><i class="fas fa-users"></i> Candidates</a>
-                <a href="#login" class="login-btn">
-                    <i class="fas fa-sign-in-alt"></i> <span>Login</span>
-                </a>
+
+
+                @guest
+                    <a href="{{ route('login') }}" class="login-btn">
+                        <i class="fas fa-sign-in-alt"></i> <span>Login</span>
+                    </a>
+                @endguest
 
                 @auth()
+                    <a href="#vote"><i class="fas fa-vote-yea"></i> Vote</a>
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="logout-btn">
+                            <i class="fas fa-sign-out-alt"></i> <span>Logout</span>
+                        </button>
+                    </form>
                     <a href="#login" class="login-btn">
                         <i class="fas fa-person"></i> <span>Profile</span>
                     </a>
+
+
+
+
+
                 @endauth
 
             </div>
