@@ -32,3 +32,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/dashboard', function () {
     return view('pages.dashboard');
 })->middleware('auth')->name('dashboard');
+
+Route::get('/HowToVote', function () {
+    return view('pages.HowToVote');
+})->name('HowToVote');
