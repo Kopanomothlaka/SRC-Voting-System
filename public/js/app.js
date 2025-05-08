@@ -41,3 +41,6 @@ const checkIfInView = () => {
 
 window.addEventListener('scroll', checkIfInView);
 window.addEventListener('load', checkIfInView);
+
+
+
