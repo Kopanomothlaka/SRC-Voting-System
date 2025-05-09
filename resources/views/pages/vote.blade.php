@@ -3,8 +3,6 @@
 @section('title', 'Vote')
 
 @section('content')
-
-
     <!-- Main Voting Content -->
     <section class="vote-section">
         <div class="container">
@@ -315,6 +313,49 @@
                 </div>
             </div>
 
+            <!-- OTP Verification Section -->
+            <div class="voting-form" id="otp-section" style="display: none;">
+                <div class="voting-header">
+                    <h2 class="position-title">Verify Your Identity</h2>
+                    <p class="position-description">For security purposes, please enter the 6-digit OTP sent to your registered email and phone number.</p>
+                </div>
+
+                <div class="voting-body">
+                    <div class="warning-banner">
+                        <div class="warning-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="warning-text">
+                            <strong>Note:</strong> The OTP is valid for 5 minutes. If you didn't receive it, you can request a new one.
+                        </div>
+                    </div>
+
+                    <div class="otp-form">
+                        <div class="otp-inputs">
+                            <input type="text" maxlength="1" class="otp-input" data-index="1" autofocus>
+                            <input type="text" maxlength="1" class="otp-input" data-index="2">
+                            <input type="text" maxlength="1" class="otp-input" data-index="3">
+                            <input type="text" maxlength="1" class="otp-input" data-index="4">
+                            <input type="text" maxlength="1" class="otp-input" data-index="5">
+                            <input type="text" maxlength="1" class="otp-input" data-index="6">
+                        </div>
+
+                        <div class="otp-timer">
+                            <i class="fas fa-clock"></i> Time remaining: <span id="otp-timer">05:00</span>
+                        </div>
+
+                        <div class="otp-actions">
+                            <button class="btn btn-outline" id="resend-otp">
+                                <i class="fas fa-sync-alt"></i> Resend OTP
+                            </button>
+                            <button class="btn btn-primary" id="verify-otp">
+                                <i class="fas fa-check"></i> Verify & Submit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Success Message (Hidden by default) -->
             <div class="voting-form success-message" id="success-message">
                 <div class="success-icon">
@@ -385,9 +426,59 @@
         </div>
     </div>
 
-
-
     <style>
+        /* Existing styles remain the same, add these new styles for OTP section */
+
+        /* OTP Verification Styles */
+        .otp-form {
+            max-width: 500px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .otp-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .otp-input {
+            width: 50px;
+            height: 60px;
+            font-size: 24px;
+            text-align: center;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .otp-input:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 61, 94, 0.2);
+        }
+
+        .otp-timer {
+            font-size: 1.1rem;
+            color: var(--gray);
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .otp-timer i {
+            color: var(--warning);
+        }
+
+        .otp-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
 
 
         header {
@@ -1081,6 +1172,7 @@
                 font-size: 60px;
             }
         }
+
     </style>
     <!-- JavaScript -->
     <script>
@@ -1144,6 +1236,7 @@
         const confirmVoteBtn = document.getElementById('confirm-vote');
         const submitVoteBtn = document.getElementById('submit-vote-btn');
         const successMessage = document.getElementById('success-message');
+        const otpSection = document.getElementById('otp-section');
 
         submitVoteBtn.addEventListener('click', () => {
             confirmationModal.classList.add('active');
@@ -1162,8 +1255,98 @@
 
             // Hide all voting sections
             Object.values(votingSections).forEach(section => {
-                section.classList.remove('active');
+                section.style.display = 'none';
             });
+
+            // Show OTP section
+            otpSection.style.display = 'block';
+
+            // Start OTP timer
+            startOTPTimer();
+        });
+
+        // OTP Verification
+        const otpInputs = document.querySelectorAll('.otp-input');
+        const resendOTPBtn = document.getElementById('resend-otp');
+        const verifyOTPBtn = document.getElementById('verify-otp');
+        const otpTimer = document.getElementById('otp-timer');
+
+        // OTP input navigation
+        otpInputs.forEach(input => {
+            input.addEventListener('input', (e) => {
+                const value = e.target.value;
+                const index = parseInt(e.target.getAttribute('data-index'));
+
+                if (value.length === 1 && index < 6) {
+                    otpInputs[index].focus();
+                }
+            });
+
+            input.addEventListener('keydown', (e) => {
+                const index = parseInt(e.target.getAttribute('data-index'));
+
+                if (e.key === 'Backspace' && e.target.value === '' && index > 1) {
+                    otpInputs[index - 2].focus();
+                }
+            });
+        });
+
+        // OTP Timer
+        let otpTimeLeft = 300; // 5 minutes in seconds
+        let otpTimerInterval;
+
+        function startOTPTimer() {
+            clearInterval(otpTimerInterval);
+            otpTimeLeft = 300;
+            updateOTPTimer();
+
+            otpTimerInterval = setInterval(() => {
+                otpTimeLeft--;
+                updateOTPTimer();
+
+                if (otpTimeLeft <= 0) {
+                    clearInterval(otpTimerInterval);
+                    otpTimer.textContent = '00:00';
+                    verifyOTPBtn.disabled = true;
+                }
+            }, 1000);
+        }
+
+        function updateOTPTimer() {
+            const minutes = Math.floor(otpTimeLeft / 60);
+            const seconds = otpTimeLeft % 60;
+            otpTimer.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        // Resend OTP
+        resendOTPBtn.addEventListener('click', () => {
+            // In a real app, this would call an API to resend OTP
+            alert('A new OTP has been sent to your registered email and phone number.');
+            startOTPTimer();
+
+            // Clear existing OTP inputs
+            otpInputs.forEach(input => {
+                input.value = '';
+            });
+            otpInputs[0].focus();
+            verifyOTPBtn.disabled = false;
+        });
+
+        // Verify OTP
+        verifyOTPBtn.addEventListener('click', () => {
+            // In a real app, this would verify the OTP with the server
+            const otp = Array.from(otpInputs).map(input => input.value).join('');
+
+            if (otp.length !== 6) {
+                alert('Please enter a complete 6-digit OTP code.');
+                return;
+            }
+
+            // For demo purposes, we'll assume any 6-digit code is valid
+            clearInterval(otpTimerInterval);
+
+            // Hide OTP section
+            otpSection.style.display = 'none';
 
             // Show success message
             successMessage.classList.add('show');
