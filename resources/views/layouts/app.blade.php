@@ -24,7 +24,7 @@
                     <a href="#home"><i class="fas fa-home"></i> Home</a>
 
                     <a href="{{route('HowToVote')}}"><i class="fas fa-question-circle"></i> How to Vote</a>
-                    <a href="#candidates"><i class="fas fa-users"></i> Candidates</a>
+                    <a href="{{route('candidates')}}"><i class="fas fa-users"></i> Candidates</a>
                     <a href="{{ route('login') }}" class="login-btn">
                         <i class="fas fa-sign-in-alt"></i> <span>Login</span>
                     </a>
@@ -34,8 +34,8 @@
                         <a href="{{route('dashboard')}}"><i class="fas fa-home"></i> Home</a>
 
                         <a href="{{route('HowToVote')}}"><i class="fas fa-question-circle"></i> How to Vote</a>
-                        <a href="#candidates"><i class="fas fa-users"></i> Candidates</a>
-                    <a href="#vote"><i class="fas fa-vote-yea"></i> Vote</a>
+                        <a href="{{route('candidates')}}"><i class="fas fa-users"></i> Candidates</a>
+                    <a href="{{route('vote')}}"><i class="fas fa-vote-yea"></i> Vote</a>
 
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
