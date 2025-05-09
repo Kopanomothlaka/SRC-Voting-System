@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Profile;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,12 +35,26 @@ Route::get('/dashboard', function () {
     return view('pages.dashboard');
 })->middleware('auth')->name('dashboard');
 
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+
+
+
+
+
+
 Route::get('/HowToVote', function () {
     return view('pages.HowToVote');
+
 })->name('HowToVote');
 Route::get('/profile', function () {
     return view('pages.profile');
 })->name('profile');
+
 Route::get('/vote', function () {
     return view('pages.vote');
 })->name('vote');

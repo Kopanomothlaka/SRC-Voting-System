@@ -10,17 +10,24 @@
             <p class="profile-subtitle">View and manage your student information and voting status for the UNISA SRC Election 2025.</p>
         </div>
     </section>
+
     <!-- Profile Main Content -->
     <section class="profile-section">
         <div class="container">
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
             <div class="profile-grid">
                 <!-- Profile Sidebar -->
                 <div class="profile-sidebar">
                     <div class="profile-image">
                         <i class="fas fa-user"></i>
                     </div>
-                    <h2 class="profile-name">Thabo Mokoena</h2>
-                    <p class="profile-student-id">Student ID: 55123456</p>
+                    <h2 class="profile-name">{{ Auth::user()->name }}</h2>
+                    <p class="profile-student-id">Student ID: {{ Auth::user()->student_number }}</p>
 
                     <div class="profile-status">
                         <span class="status-badge status-active">Active Student</span>
@@ -32,8 +39,6 @@
                             <span>My Profile</span>
                         </div>
 
-
-
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
@@ -44,7 +49,6 @@
                                 <span>Log Out</span>
                             </div>
                         </a>
-
                     </div>
                 </div>
 
@@ -73,46 +77,71 @@
                                 <i class="fas fa-user-circle"></i> Personal Information
                             </h3>
                             <div class="profile-card-actions">
-                                <button class="profile-card-action">
+                                <button class="profile-card-action" id="editProfileBtn">
                                     <i class="fas fa-edit"></i> Edit
                                 </button>
                             </div>
+
+
                         </div>
-                        <div class="profile-card-content">
-                            <div class="info-grid">
-                                <div class="info-item">
-                                    <span class="info-label">Full Name</span>
-                                    <span class="info-value">Thabo Mokoena</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Student Number</span>
-                                    <span class="info-value">55123456</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Email Address</span>
-                                    <span class="info-value">55123456@mylife.unisa.ac.za</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Phone Number</span>
-                                    <span class="info-value">+27 73 456 7890</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Faculty</span>
-                                    <span class="info-value">Science, Engineering & Technology</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Study Year</span>
-                                    <span class="info-value">3rd Year</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Campus</span>
-                                    <span class="info-value">Muckleneuk Campus</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Student Status</span>
-                                    <span class="info-value">Active</span>
-                                </div>
+                        @if ($errors->any())
+                            <div class="alert alert-danger mt-2 text-danger" style="color: red">
+                                <ul class="mb-0">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
+                        @endif
+
+                        <div class="profile-card-content">
+                            <form id="profileForm" method="POST" action="{{ route('profile.update') }}">
+                                @csrf
+                                @method('PUT')
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <span class="info-label">Full Name</span>
+                                        <span class="info-value view-mode">{{ Auth::user()->name }}</span>
+                                        <input type="text" name="name" value="{{ Auth::user()->name }}" class="info-value edit-mode form-control" style="display: none;">
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Student Number</span>
+                                        <span class="info-value">{{ Auth::user()->student_number }}</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Email Address</span>
+                                        <span class="info-value">{{ Auth::user()->email }}</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Phone Number</span>
+                                        <span class="info-value view-mode">{{ Auth::user()->phone }}</span>
+                                        <input type="text" name="phone" value="{{ Auth::user()->phone }}" class="info-value edit-mode form-control" style="display: none;">
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Faculty</span>
+                                        <span class="info-value view-mode">{{ Auth::user()->faculty }}</span>
+                                        <input type="text" name="faculty" value="{{ Auth::user()->faculty }}" class="info-value edit-mode form-control" style="display: none;">
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Study Year</span>
+                                        <span class="info-value view-mode">{{ Auth::user()->study_year }}</span>
+                                        <input type="text" name="study_year" value="{{ Auth::user()->study_year }}" class="info-value edit-mode form-control" style="display: none;">
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Campus</span>
+                                        <span class="info-value view-mode">{{ Auth::user()->campus }}</span>
+                                        <input type="text" name="campus" value="{{ Auth::user()->campus }}" class="info-value edit-mode form-control" style="display: none;">
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Student Status</span>
+                                        <span class="info-value">Active</span>
+                                    </div>
+                                </div>
+                                <div class="form-actions edit-mode" style="display: none; margin-top: 20px;">
+                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <button type="button" id="cancelEditBtn" class="btn btn-secondary">Cancel</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
 
@@ -182,13 +211,10 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
     </section>
-
 
     <style>
         :root {
@@ -240,17 +266,6 @@
             padding: 10px 0;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
-
-        .header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-
-
-
-
 
         /* Profile Header */
         .profile-header {
@@ -307,12 +322,6 @@
             color: var(--primary);
             border: 5px solid rgba(177, 70, 194, 0.1);
             overflow: hidden;
-        }
-
-        .profile-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .profile-name {
@@ -485,6 +494,64 @@
             font-weight: 600;
         }
 
+        /* Form Controls */
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        /* Edit Mode Styles */
+        .edit-mode {
+            display: none;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background-color: var(--gray);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--dark);
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .alert-success {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
         /* Voting Status Card */
         .voting-status-card {
             display: flex;
@@ -625,79 +692,6 @@
             color: var(--warning);
         }
 
-        /* Upcoming Elections */
-        .upcoming-elections {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .upcoming-election {
-            background-color: var(--light);
-            border-radius: 10px;
-            padding: 15px;
-            transition: all 0.3s ease;
-        }
-
-        .upcoming-election:hover {
-            background-color: rgba(177, 70, 194, 0.05);
-        }
-
-        .upcoming-election-title {
-            font-weight: 600;
-            color: var(--secondary);
-            margin-bottom: 5px;
-        }
-
-        .upcoming-election-date {
-            color: var(--gray);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-        }
-
-        .upcoming-election-status {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .countdown {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: var(--primary);
-            font-size: 0.9rem;
-            font-weight: 600;
-        }
-
-        .countdown i {
-            font-size: 14px;
-        }
-
-        .reminder-btn {
-            background-color: rgba(177, 70, 194, 0.1);
-            color: var(--primary);
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .reminder-btn:hover {
-            background-color: var(--primary);
-            color: var(--white);
-        }
-
-
-
-
-
-
         /* Responsive Styles */
         @media (max-width: 992px) {
             .profile-grid {
@@ -714,16 +708,6 @@
             .header-container {
                 padding: 15px;
             }
-
-
-
-
-
-            .mobile-menu-btn {
-                display: block;
-            }
-
-
 
             .profile-title {
                 font-size: 2rem;
@@ -753,32 +737,30 @@
             .profile-title {
                 font-size: 1.8rem;
             }
-
-
-
-
         }
     </style>
+
     <!-- JavaScript -->
     <script>
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
+        // Profile Edit Toggle
+        const editProfileBtn = document.getElementById('editProfileBtn');
+        const cancelEditBtn = document.getElementById('cancelEditBtn');
+        const viewModeElements = document.querySelectorAll('.view-mode');
+        const editModeElements = document.querySelectorAll('.edit-mode');
+        const formActions = document.querySelector('.form-actions');
 
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active')
-                ? '<i class="fas fa-times"></i>'
-                : '<i class="fas fa-bars"></i>';
+        editProfileBtn.addEventListener('click', () => {
+            viewModeElements.forEach(el => el.style.display = 'none');
+            editModeElements.forEach(el => el.style.display = 'block');
+            formActions.style.display = 'flex';
+            editProfileBtn.style.display = 'none';
         });
 
-        // Sidebar Menu Interaction
-        const menuItems = document.querySelectorAll('.sidebar-menu-item');
-        menuItems.forEach(item => {
-            item.addEventListener('click', () => {
-                menuItems.forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-            });
+        cancelEditBtn.addEventListener('click', () => {
+            viewModeElements.forEach(el => el.style.display = 'block');
+            editModeElements.forEach(el => el.style.display = 'none');
+            formActions.style.display = 'none';
+            editProfileBtn.style.display = 'block';
         });
 
         // Initialize animations
@@ -799,11 +781,4 @@
         window.addEventListener('scroll', checkIfInView);
         window.addEventListener('load', checkIfInView);
     </script>
-
-
-
-
-
-
-
 @endsection
