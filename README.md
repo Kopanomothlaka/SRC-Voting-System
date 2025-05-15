@@ -1,66 +1,111 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UNISA SRC Voting Election System</title>
+</head>
+<body>
+  <h1>🗳 UNISA SRC Voting System</h1>
+  <p>Welcome to the official repository for the <strong>UNISA SRC Voting Election System</strong> – a secure, efficient, and user-friendly digital platform for managing Student Representative Council (SRC) elections at the University of South Africa (UNISA).</p>
+  <hr>
+  <h2>📌 Project Overview</h2>
+  <p>The UNISA SRC Voting System is developed to digitize and streamline the voting process for SRC elections. This application ensures:</p>
+  <ul>
+    <li>✅ Transparent and secure elections</li>
+    <li>✅ Real-time vote counting</li>
+    <li>✅ User verification via SMS</li>
+    <li>✅ Easy-to-use interface for students and administrators</li>
+  </ul>
+  <hr>
+  <h2>🚀 Features</h2>
+  <ul>
+    <li>🔐 <strong>Secure Registration:</strong> Students register using valid student numbers and receive a verification SMS.</li>
+    <li>📲 <strong>Two-Factor Authentication:</strong> Login requires both a password and a unique code sent via SMS.</li>
+    <li>🗳 <strong>Simple Voting Interface:</strong> Vote for your preferred candidate in a few clicks.</li>
+    <li>📊 <strong>Live Vote Count:</strong> Admins can track votes in real time.</li>
+    <li>📅 <strong>Election Scheduling:</strong> Set voting start and end times.</li>
+    <li>📑 <strong>Admin Dashboard:</strong> Manage candidates, view statistics, and oversee the entire election process.</li>
+  </ul>
+  <hr>
+  <h2>🛠 Tech Stack</h2>
+  <table border="1" cellpadding="8" cellspacing="0">
+    <thead>
+      <tr>
+        <th>Layer</th>
+        <th>Technology</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Frontend</td>
+        <td>HTML, CSS, JavaScript</td>
+      </tr>
+      <tr>
+        <td>Backend</td>
+        <td>PHP (Laravel) </td>
+      </tr>
+      <tr>
+        <td>Authentication</td>
+        <td>SMS Gateway API (e.g. Twilio)</td>
+      </tr>
+      <tr>
+        <td>Database</td>
+        <td>MySQL </td>
+      </tr>
+      <tr>
+        <td>Hosting</td>
+        <td>Heroku / DigitalOcean / Vercel</td>
+      </tr>
+    </tbody>
+  </table>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+  <hr>
 
-## About Laravel
+  <h2>📷 Screenshots</h2>
+  <p><em>Add screenshots of the login page, voting page, and admin dashboard here.</em></p>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+  <hr>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+  <h2>🔧 Installation</h2>
+  <pre><code>
+# Clone the repository
+git clone https://github.com/your-username/unisa-src-voting.git
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+# Change directory
+cd unisa-src-voting
 
-## Learning Laravel
+# Install dependencies (Laravel example)
+composer install
+npm install
+php artisan migrate
+php artisan serve
+  </code></pre>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+  <hr>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+  <h2>🧪 Running Tests</h2>
+  <pre><code>php artisan test</code></pre>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+  <hr>
 
-## Laravel Sponsors
+  <h2>👥 Contributing</h2>
+  <ol>
+    <li>Fork the repo</li>
+    <li>Create your feature branch (<code>git checkout -b feature/my-feature</code>)</li>
+    <li>Commit your changes (<code>git commit -am 'Add new feature'</code>)</li>
+    <li>Push to the branch (<code>git push origin feature/my-feature</code>)</li>
+    <li>Create a new Pull Request</li>
+  </ol>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+  <hr>
 
-### Premium Partners
+   
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+  <hr>
 
-## Contributing
+  <h2>📬 Contact</h2>
+  <p>📧 Email: <a href="kaytechcodecatalyst@outlook.com">kaytechcodecatalyst@outlook.com</a></p>
+  <p>🌐 Managed by <a href="https://kaytechcodecatalyst.co.za/" target="_blank">KayTech/a></p>
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+</body>
+</html>
