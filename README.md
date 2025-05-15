@@ -119,7 +119,7 @@
 
   <h2>📬 Contact</h2>
   <p>📧 Email: <a href="kaytechcodecatalyst@outlook.com">kaytechcodecatalyst@outlook.com</a></p>
-  <p>🌐 Managed by <a href="https://kaytechcodecatalyst.co.za/" target="_blank">KayTech/a></p>
+  <p>🌐 Managed by <a href="https://kaytechcodecatalyst.co.za" target="_blank">KayTech/a></p>
 
 </body>
 </html>
