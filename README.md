@@ -64,41 +64,6 @@
   <h2>📷 Screenshots</h2>
   <p><em>Add screenshots of the login page, voting page, and admin dashboard here.</em></p>
 
-  <hr>
-
-  <h2>🔧 Installation</h2>
-  <pre><code>
-# Clone the repository
-git clone https://github.com/your-username/unisa-src-voting.git
-
-# Change directory
-cd unisa-src-voting
-
-# Install dependencies (Laravel example)
-composer install
-npm install
-php artisan migrate
-php artisan serve
-  </code></pre>
-
-  <hr>
-
-  <h2>🧪 Running Tests</h2>
-  <pre><code>php artisan test</code></pre>
-
-  <hr>
-
-  <h2>👥 Contributing</h2>
-  <ol>
-    <li>Fork the repo</li>
-    <li>Create your feature branch (<code>git checkout -b feature/my-feature</code>)</li>
-    <li>Commit your changes (<code>git commit -am 'Add new feature'</code>)</li>
-    <li>Push to the branch (<code>git push origin feature/my-feature</code>)</li>
-    <li>Create a new Pull Request</li>
-  </ol>
-
-  <hr>
-
    
 
   <hr>
